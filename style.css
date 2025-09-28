@@ -1,0 +1,988 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
+
+:root {
+    --bg-dark: #E9E9E9;
+    --bg-light: #FDFDFD;
+    --text-primary: #2D2D2D;
+    --text-secondary: #7D7D7D;
+    --accent-green: #2baf41;
+    --accent-red: #FF3B30;
+    --accent-blue: #007AFF;
+    --border-color: #E0E0E0;
+    --card-radius: 16px;
+    --transition-fast: 0.3s ease;
+    --shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    --button-spacing: 20px;
+    --lang-btn-bg: #ececec;
+    --card-bg:     #FFFFFF;
+}
+
+
+/* тёмная тема */
+:root[data-theme="dark"] {
+  --bg-light:       #1e293b;
+  --bg-dark:        #0f172a;
+  --text-primary:   #f1f5f9;
+  --text-secondary: #94a3b8;
+  --border-color:   #334155;
+  --accent-green:   #2baf41;
+  --hover-bg:       rgba(241,245,249,0.1);
+  --lang-btn-bg: #334155;
+  --card-bg:     #1E293B;
+}
+
+/* «криптовалютная» тема */
+:root[data-theme="crypto"] {
+  --bg-light:       #121212;
+  --bg-dark:        #0d0d0d;
+  --text-primary:   #e0e0e0;
+  --text-secondary: #666666;
+  --border-color:   #333333;
+  --accent-green:   #2baf41;
+  --hover-bg:       rgba(240,185,11,0.1);
+  --lang-btn-bg: #333333;
+  --card-bg:     #121212;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+    line-height: 1.6;
+    font-weight: 400;
+}
+
+/* обнуляем любые отступы .input-group внутри header */
+.header .input-group {
+  margin: 0;
+  padding: 0;
+}
+
+/* Шапка */
+.header {
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    height: 70px;
+    background: #fff;
+    border-bottom: 1px solid var(--border-color);
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+/* Логотип */
+.logo-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-right: auto;
+}
+.logo-header .logo-img {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.logo-header #logo-text {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.1;
+}
+
+/* Контейнер переключателя темы */
+.theme-selector {
+    display: flex;
+    align-items: center;
+    margin-left: auto;      /* выравнивание вправо */
+    margin-right: 12px;     /* отступ между переключателем и языком */
+
+    /* рамка вокруг всех кнопок */
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 4px;
+    background: #fafafa;
+}
+
+/* Общий стиль кнопок */
+.theme-selector .theme-btn {
+    width: 32px;
+    height: 32px;
+    margin: 0 4px;
+    padding: 0;
+    background: transparent;
+    border: none;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+/* При наведении на кнопку */
+.theme-selector .theme-btn:hover {
+    background: rgba(0,0,0,0.05);
+}
+
+/* Иконка внутри кнопки */
+.theme-selector .theme-btn svg {
+    width: 20px;
+    height: 20px;
+    fill: var(--text-primary);
+    opacity: 0.7;
+    transition: opacity 0.2s ease, fill 0.2s ease;
+}
+
+/* Активная (выбранная) тема */
+.theme-selector .theme-btn.active svg {
+    opacity: 1;
+    fill: var(--accent-green);
+    transform: scale(1.1);
+}
+
+
+/* Языковой селектор */
+.header .language-dropdown {
+    display: flex;
+    align-items: center;
+}
+.header .lang-select {
+    position: relative;
+}
+.header .lang-selected {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    background: #ececec;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.header .lang-selected:hover {
+    background: #ececec;
+}
+.flag-icon {
+    width: 20px;
+    height: 14px;
+    object-fit: cover;
+}
+
+/* Пример темы dark через data-theme атрибут на <html> или <body> */
+body[data-theme="dark"] {
+  --bg-light: #1e293b;
+  --text-primary: #f1f5f9;
+  --hover-bg: rgba(241,245,249,0.1);
+  --accent-green: #10b981;
+}
+
+
+.container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+    min-height: 100%;
+    background: var(--bg-light);
+    box-shadow: var(--shadow);
+    border-radius: 0 0 var(--card-radius) var(--card-radius);
+    overflow: hidden;
+}
+
+.sidebar {
+    width: 280px;
+    background-color: #FFFFFF;
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid var(--border-color);
+    box-shadow: inset -1px 0 4px rgba(0, 0, 0, 0.04);
+}
+
+.input-group {
+    margin-bottom: 25px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 6px;
+    color: var(--text-secondary);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+select {
+    width: 100%;
+    padding: 12px 36px 12px 12px; /* место под стрелку справа */
+    background-color: #ececec;
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    transition: var(--transition-fast);
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg fill='%237D7D7D' height='16' width='16' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px;
+}
+
+select:focus {
+    outline: none;
+    border-color: var(--accent-blue);
+    background-color: #fff;
+    box-shadow: 0 0 6px rgba(0, 122, 255, 0.2);
+}
+
+
+/* Кнопки */
+.button-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--button-spacing);
+    margin-top: 20px;
+    margin-bottom: var(--button-spacing);
+}
+
+.button {
+    width: 100%;
+    padding: 14px;
+    font-size: 15px;
+    font-weight: 600;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    font-family: 'Inter', sans-serif;
+    text-align: center;
+}
+
+.button-green {
+    background-color: var(--accent-green);
+    color: #fff;
+}
+
+.button-green:hover {
+    background-color: #19a134;
+    transform: translateY(-1px);
+}
+
+.button-blue {
+    background-color: #229ED9;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.button-blue:hover {
+    background-color: #1b8dbf;
+    transform: translateY(-1px);
+}
+
+.telegram-icon-text svg {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.main-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 30px;
+    background-color: #ececec;
+    overflow-y: auto;
+    gap: var(--button-spacing);
+}
+
+.signal-block, .chart-block {
+    background-color: #FFFFFF;
+    border: 1px solid var(--border-color);
+    border-radius: var(--card-radius);
+    box-shadow: var(--shadow);
+    transition: transform 0.2s ease, box-shadow var(--transition-fast);
+}
+
+.signal-block:hover, .chart-block:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+}
+
+.signal-header, .chart-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border-color);
+    background-color: #FAFAFA;
+    border-top-left-radius: var(--card-radius);
+    border-top-right-radius: var(--card-radius);
+}
+
+.signal-result {
+    padding: 30px;
+    background-color: #FFFFFF;
+    border-radius: 0 0 var(--card-radius) var(--card-radius);
+    text-align: center;
+}
+
+.signal-details {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    font-family: 'Inter', sans-serif;
+}
+
+.signal-pair {
+    font-size: 28px;
+    font-weight: 700;
+}
+
+.signal-direction {
+    font-size: 20px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.signal-timeframe, .signal-probability {
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+.signal-placeholder {
+    color: var(--text-secondary);
+    font-size: 16px;
+    opacity: 0.5;
+}
+
+.chart {
+    height: 400px;
+    background-color: #ececec;
+    border-radius: 0 0 var(--card-radius) var(--card-radius);
+}
+
+.green {
+    color: var(--accent-green);
+}
+
+.red {
+    color: var(--accent-red);
+}
+
+.signal-countdown {
+    text-align: center;
+    color: var(--text-secondary);
+    margin-top: 10px;
+    font-size: 14px;
+    opacity: 0.7;
+}
+
+.button {
+    text-decoration: none;
+}
+
+
+.lang-select {
+    position: relative;
+    width: 100%;
+    font-family: 'Inter', sans-serif;
+}
+
+.lang-selected {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 12px;
+    background-color: #FAFAFA;
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    transition: var(--transition-fast);
+    font-size: 14px;
+}
+
+.lang-selected:focus,
+.lang-selected:hover {
+    outline: none;
+    border-color: var(--accent-blue);
+    background-color: #fff;
+    box-shadow: 0 0 6px rgba(0, 122, 255, 0.2);
+}
+
+.lang-selected img {
+    margin-right: 10px;
+    width: 20px;
+    height: 14px;
+    border-radius: 2px;
+}
+
+.arrow-down {
+    width: 16px;
+    height: 16px;
+    margin-left: auto;
+    color: var(--text-secondary);
+    transition: transform 0.2s ease;
+}
+
+
+.lang-dropdown-content {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    background-color: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    z-index: 20;
+    box-shadow: var(--shadow);
+    display: none;
+}
+
+.lang-dropdown-content .lang-item {
+    padding: 10px 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    color: var(--text-primary);
+    transition: background-color 0.2s ease;
+}
+
+.lang-dropdown-content .lang-item:hover {
+    background-color: #ececec;
+}
+
+.lang-item img {
+    margin-right: 8px;
+    width: 20px;
+    height: 14px;
+    border-radius: 2px;
+}
+
+.signal-analyzing {
+  font-style: italic;
+  color: #666;
+  font-size: 1.2em;
+  display: inline-block;
+  margin-bottom: 10px;
+  position: relative;
+  width: 200px; /* ширина текста + полосы */
+}
+
+.signal-analyzing .dots span {
+  animation-name: blink;
+  animation-duration: 1.5s;
+  animation-iteration-count: infinite;
+  animation-fill-mode: forwards;
+  opacity: 0;
+  display: inline-block;
+  font-weight: bold;
+}
+
+.signal-analyzing .dots span:nth-child(1) { animation-delay: 0s; }
+.signal-analyzing .dots span:nth-child(2) { animation-delay: 0.3s; }
+.signal-analyzing .dots span:nth-child(3) { animation-delay: 0.6s; }
+
+@keyframes blink {
+  0%, 20% { opacity: 0; }
+  50%, 100% { opacity: 1; }
+}
+
+.progress-bar {
+    width: 100%;       /* занимает всю ширину родителя */
+    max-width: 600px;  /* максимальная ширина, если хочешь ограничить */
+    height: 10px;
+    background-color: #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-top: 30px;
+}
+
+
+.progress-fill {
+    height: 100%;          /* заполняет всю высоту родителя */
+    width: 0%;             /* стартовая ширина */
+    background-color: #34b939; /* цвет заливки (зелёный) */
+    transition: width 3s linear; /* плавный переход, время заменяется динамически */
+    border-radius: 5px 0 0 5px; /* скругление слева */
+}
+
+
+
+/* Responsive (Mobile) */
+@media screen and (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .main-content {
+        padding: 20px;
+        gap: 20px;
+    }
+
+    .chart {
+        height: 250px;
+    }
+
+    .signal-details {
+        gap: 10px;
+    }
+
+    .signal-pair {
+        font-size: 22px;
+    }
+
+    .signal-direction {
+        font-size: 18px;
+    }
+}
+
+/* === Специфичные стили для каждой темы === */
+
+/* 1. Светлая тема (по умолчанию) */
+:root {
+  --header-bg:           var(--bg-light);
+  --container-bg:        var(--bg-light);
+  --sidebar-bg:          #FFFFFF;
+  --main-bg:             #ECECEC;
+  --button-bg:           var(--accent-green);
+  --button-text:         #FFFFFF;
+  --lang-btn-bg:         var(--bg-light);
+  --select-bg:           #ECECEC;
+  --progress-bg:         #DDD;
+  --progress-fill:       var(--accent-green);
+}
+
+/* 2. Тёмная тема */
+:root[data-theme="dark"] {
+  --header-bg:           #1E293B;
+  --container-bg:        #0F172A;
+  --sidebar-bg:          #1E293B;
+  --main-bg:             #1E293B;
+  --button-bg:           #10B981;
+  --button-text:         #F1F5F9;
+  --lang-btn-bg:         #334155;
+  --select-bg:           #334155;
+  --progress-bg:         #334155;
+  --progress-fill:       #10B981;
+}
+
+/* 3. Крипто-тема */
+:root[data-theme="crypto"] {
+  --header-bg:           #121212;
+  --container-bg:        #0D0D0D;
+  --sidebar-bg:          #121212;
+  --main-bg:             #0D0D0D;
+  --button-bg:           #F0B90B;
+  --button-text:         #121212;
+  --lang-btn-bg:         #333333;
+  --select-bg:           #333333;
+  --progress-bg:         #333333;
+  --progress-fill:       #F0B90B;
+}
+
+/* === Применение переменных к блокам === */
+.header {
+  background: var(--header-bg);
+}
+.container {
+  background: var(--container-bg);
+}
+.sidebar {
+  background: var(--sidebar-bg);
+}
+.main-content {
+  background: var(--main-bg);
+}
+
+/* Кнопки «Получить сигнал» и «Telegram» */
+.button-green {
+  background-color: var(--button-bg);
+  color: var(--button-text);
+}
+.button-green:hover {
+  background-color: var(--button-bg);
+}
+.button-blue {
+  /* можно задать другой accent для кнопки-blue при необходимости */
+}
+
+/* Языковая кнопка */
+.header .lang-selected {
+  background: var(--lang-btn-bg);
+  border-color: var(--border-color);
+  color: var(--text-primary);
+}
+
+/* Селекты */
+select {
+  background: var(--select-bg);
+  border-color: var(--border-color);
+  color: var(--text-primary);
+}
+
+/* Прогресс-бар */
+.progress-bar {
+  background-color: var(--progress-bg);
+}
+.progress-fill {
+  background-color: var(--progress-fill);
+}
+
+/* Подсветка активной кнопки темы */
+.theme-selector .theme-btn.active {
+  background-color: var(--button-bg);
+}
+.theme-selector .theme-btn.active svg {
+  fill: var(--button-text);
+}
+
+/* При наведении */
+.theme-selector .theme-btn:hover:not(.active) {
+  background-color: var(--hover-bg);
+}
+
+/* Переключатель OTC/Standard */
+.mode-btn.active {
+  background-color: var(--button-bg);
+  color: var(--button-text);
+  box-shadow: 0 3px 10px rgba(var(--accent-green-rgb), 0.2);
+}
+
+/* И любые другие элементы, которым нужен цвет темы... */
+
+/* === Новые переменные для карточек и выпадающих списков === */
+:root {
+  --card-bg:          #FFFFFF;
+  --card-header-bg:   #FAFAFA;
+}
+:root[data-theme="dark"] {
+  --card-bg:          #1E293B;
+  --card-header-bg:   #334155;
+}
+:root[data-theme="crypto"] {
+  --card-bg:          #121212;
+  --card-header-bg:   #333333;
+}
+
+/* === Стили для выпадающих списков === */
+.lang-dropdown-content {
+  background-color: var(--card-bg);
+  border-color: var(--border-color);
+  color: var(--text-primary);
+}
+.lang-dropdown-content .lang-item {
+  background: var(--card-bg);
+}
+.lang-dropdown-content .lang-item:hover {
+  background: var(--hover-bg);
+}
+
+/* === Стили для окна сигнала и других карточек === */
+.signal-block,
+.chart-block {
+  background-color: var(--card-bg);
+  border-color: var(--border-color);
+}
+.signal-header,
+.chart-header {
+  background-color: var(--card-header-bg);
+  border-color: var(--border-color);
+}
+.signal-result {
+  background-color: var(--card-bg);
+}
+
+/* === Подсветка селектов в зависимости от темы === */
+select {
+  background-color: var(--select-bg, var(--card-bg));
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+/* === Прогресс-бар === */
+.progress-bar {
+  background-color: var(--progress-bg, #ddd);
+}
+.progress-fill {
+  background-color: var(--progress-fill, var(--accent-green));
+}
+
+
+/* ===== Универсальные стили для всех кастомных выпадающих списков ===== */
+.select-items,              /* контейнер опций у кастомного селекта */
+#currency-pair-items,       /* ваш список инструментов */
+#timeframe-items,           /* ваш список таймфреймов */
+.lang-dropdown-content {    /* список языков */
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  border-radius: 8px;
+  overflow-y: auto;
+  max-height: 240px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* сам элемент опции */
+.select-item,
+.lang-dropdown-content .lang-item {
+  padding: 10px 12px;
+  cursor: pointer;
+  transition: background 0.2s;
+  background-color: var(--card-bg);
+}
+
+/* ховер / активный пункт */
+.select-item:hover,
+.select-item.selected,
+.lang-dropdown-content .lang-item:hover,
+.lang-dropdown-content .lang-item.active {
+  background-color: var(--hover-bg);
+}
+
+/* стрелка кастомного селекта */
+.select-selected::after {
+  border-top-color: var(--text-primary);
+}
+
+/* скроллбар в списках */
+.select-items::-webkit-scrollbar,
+.lang-dropdown-content::-webkit-scrollbar {
+  width: 6px;
+}
+.select-items::-webkit-scrollbar-thumb,
+.lang-dropdown-content::-webkit-scrollbar-thumb {
+  background-color: var(--accent-green);
+  border-radius: 3px;
+}
+.select-items::-webkit-scrollbar-track,
+.lang-dropdown-content::-webkit-scrollbar-track {
+  background: var(--card-bg);
+}
+
+/* 1. фон «кнопки-селекта» */
+.lang-selected,
+.select-selected,
+.custom-select .select-selected {
+  background-color: var(--lang-btn-bg) !important;
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+}
+
+/* 2. фон выпадающего списка опций */
+.lang-dropdown-content,
+.select-items,
+#currency-pair-items,
+#timeframe-items {
+  background-color: var(--card-bg) !important;
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+}
+
+/* 3. сами пункты */
+.lang-dropdown-content .lang-item,
+.select-items .select-item,
+#currency-pair-items .select-item,
+#timeframe-items .select-item {
+  background-color: var(--card-bg);
+}
+
+/* 4. ховер/активный пункт */
+.lang-dropdown-content .lang-item:hover,
+.lang-dropdown-content .lang-item.active,
+.select-items .select-item:hover,
+.select-items .select-item.selected,
+#currency-pair-items .select-item:hover,
+#currency-pair-items .select-item.selected,
+#timeframe-items .select-item:hover,
+#timeframe-items .select-item.selected {
+  background-color: var(--hover-bg);
+}
+
+/* 1) Убираем системный вид */
+select {
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+}
+
+/* 2) Стилизуем фон и текст самих опций */
+select option {
+  background-color: var(--card-bg) !important;
+  color: var(--text-primary) !important;
+}
+
+
+/* 1) Определяем фон theme-selector */
+:root {
+  --theme-switcher-bg: #fafafa;        /* светлая тема */
+}
+:root[data-theme="dark"] {
+  --theme-switcher-bg: #334155;        /* для dark */
+}
+:root[data-theme="crypto"] {
+  --theme-switcher-bg: #333333;        /* для crypto */
+}
+
+/* 2) Применяем к контейнеру */
+.theme-selector {
+  background: var(--theme-switcher-bg);
+  /* остальные ваши стили… */
+}
+
+/* 3) Подсветка активной кнопки */
+.theme-selector .theme-btn.active {
+  background-color: var(--button-bg);
+}
+
+/* 4) Наведение на неактивную */
+.theme-selector .theme-btn:hover:not(.active) {
+  background-color: var(--hover-bg);
+}
+
+.theme-selector {
+  border: 1px solid var(--border-color);
+}
+
+/* Фон “кнопки-селекта” (текущего выбранного option) */
+select,
+.custom-select .select-selected {
+  background-color: var(--select-btn-bg);
+  color: var(--text-primary);
+}
+
+/* Когда селект открыт или в фокусе */
+select:focus,
+.custom-select .select-selected.selected {
+  background-color: var(--hover-bg);
+}
+
+/* общий класс для всех иконок рядом с label/h2 */
+.label-icon {
+  margin-right: 8px;
+  vertical-align: middle;
+  opacity: 0.75;
+  transition: fill 0.2s ease;
+}
+
+/* в темах цвет иконок автоматически будет меняться вместе с text-primary */
+.label-icon {
+  fill: var(--text-primary);
+}
+
+/* при наведении на родительский .input-group можно делать иконку чуть ярче */
+.input-group:hover .label-icon {
+  opacity: 1;
+}
+
+/* стили спиннера */
+.spinner {
+  width: 60px;               /* итоговая длина линии */
+  height: 6px;               /* толщина */
+  background: linear-gradient(
+    90deg,
+    var(--accent-blue) 0%,
+    var(--accent-green) 50%,
+    var(--accent-blue) 100%
+  );
+  background-size: 200% 100%;
+  border-radius: 3px;
+  transform-origin: center center;
+  animation:
+    stretch 1.2s ease-in-out infinite,
+    shimmer 1.2s linear infinite;
+  margin: 16px auto;         /* по центру, отступ сверху/снизу */
+}
+
+/* из точки в линию и обратно */
+@keyframes stretch {
+  0%, 100% { transform: scaleX(0); }
+  50%      { transform: scaleX(1); }
+}
+
+/* ездящая по градиенту “волна” */
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+
+/* Mobile header layout */
+@media screen and (max-width: 768px) {
+  .header {
+    display: flex;
+    flex-wrap: nowrap;            /* не переносить на новую строку */
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    height: auto;
+  }
+
+  /* Иконка логотипа слева, текст скрываем */
+  .logo-header {
+    display: flex;
+    align-items: center;
+    order: 1;
+    margin: 0;
+  }
+  .logo-header #logo-text {
+    display: none;
+  }
+
+  /* Оборачиваем селект языка и тему в один контейнер */
+  /* (если ещё нет — оберните их, как я показывал ранее, в <div class="header-controls">) */
+  .header-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    order: 2;
+    margin: 0;
+    margin-left: auto;            /* отодвигаем вправо */
+  }
+
+  /* Подправляем переключатель тем */
+  .theme-selector {
+    margin: 0;
+    padding: 4px;
+  }
+  .theme-selector .theme-btn {
+    width: 28px;
+    height: 28px;
+    margin: 0 4px;
+  }
+  .theme-selector .theme-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* Языковой селектор */
+  .language-dropdown {
+    margin: 0;
+  }
+  .language-dropdown .lang-selected {
+    padding: 6px 8px;
+    font-size: 12px;
+  }
+}
